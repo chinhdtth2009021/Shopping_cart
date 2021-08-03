@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShoppingCartController;
+use App\Http\Controllers\ShoppingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,6 @@ Route::get('/list',[ShoppingCartController::class,'list']);
 Route::get('add',[ProductController::class,'add']);
 Route::get('show',[ProductController::class,'show']);
 Route::get('remove',[ProductController::class,'remove']);
+
+
+Route::post('/save',[ShoppingController::class,'save']);

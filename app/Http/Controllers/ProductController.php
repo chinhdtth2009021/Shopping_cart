@@ -51,6 +51,9 @@ class ProductController extends Controller
 
     public function show()
     {
+//        if (!Session::has('shoppingCart')){
+//            Session::put('shoppingCart',[]);
+//        }
        $shoppingCart =  Session::get('shoppingCart');
         return view('/shopping/cart',[
             'shoppingCart' =>$shoppingCart,

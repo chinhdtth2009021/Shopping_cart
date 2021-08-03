@@ -39,37 +39,69 @@
         </tr>
         </thead>
         <tbody>
-        <?php
-        $totalPrice = 0
-        ?>
-        @foreach($shoppingCart as $shopping)
+        @if($shoppingCart == null)
+            vui long them moi san pham
+        @else
             <?php
-            if (!empty($shopping)) {
-                $totalPrice += $shopping->unitPrice * $shopping->quantity;
-            }
+            $totalPrice = 0
             ?>
-            <form action="/add" method="get">
-                <input type="hidden" name="cartAction" value="update">
-                <input type="hidden" name="productId" value="{{$shopping->id}}">
-                <tr>
-                    <td>{{$shopping->id}}</td>
-                    <td>{{$shopping->name}}</td>
-                    <td>{{$shopping->unitPrice}}$</td>
-                    <td><img src="{{$shopping->thumbnail}}" alt="" width="70px"></td>
-                    <td><input type="number" min="1" value="{{$shopping->quantity}}" name="productQuantity"></td>
-                    <td>{{$shopping->quantity * $shopping->unitPrice}}$</td>
-                    <td>
-                        <button class="btn btn-primary">update</button>
-                        <a href="/remove?productId={{$shopping->id}}"
-                           onclick="return confirm('bạn chắc chắn muốn xóa san pham?')"
-                           class="btn btn-danger">Remove</a>
-                    </td>
-                </tr>
-            </form>
-        @endforeach
+            @foreach($shoppingCart as $shopping)
+                <?php
+                if (!empty($shopping)) {
+                    $totalPrice += $shopping->unitPrice * $shopping->quantity;
+                }
+                ?>
+                <form action="/add" method="get">
+                    <input type="hidden" name="cartAction" value="update">
+                    <input type="hidden" name="productId" value="{{$shopping->id}}">
+                    <tr>
+                        <td>{{$shopping->id}}</td>
+                        <td>{{$shopping->name}}</td>
+                        <td>{{$shopping->unitPrice}}$</td>
+                        <td><img src="{{$shopping->thumbnail}}" alt="" width="70px"></td>
+                        <td><input type="number" min="1" value="{{$shopping->quantity}}" name="productQuantity"></td>
+                        <td>{{$shopping->quantity * $shopping->unitPrice}}$</td>
+                        <td>
+                            <button class="btn btn-primary">update</button>
+                            <a href="/remove?productId={{$shopping->id}}"
+                               onclick="return confirm('bạn chắc chắn muốn xóa san pham?')"
+                               class="btn btn-danger">Remove</a>
+                        </td>
+                    </tr>
+                </form>
+            @endforeach
+            <div>ToTal Price:{{$totalPrice}}</div>
+        @endif
         </tbody>
     </table>
-    <div>ToTal Price:{{$totalPrice}}</div>
+</div>
+<div class="row mt-3 d-flex justify-content-end">
+    <form action="/save" class="col-6" method="post">
+        @csrf
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="text" name="shipName" class="form-control" placeholder="Enter name ">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="text" name="shipPhone" class="form-control" placeholder="Enter Phone">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="text" name="shipAddress" class="form-control" placeholder="Enter address">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="text" name="note" class="form-control" placeholder="Enter Note">
+            </div>
+        </div>
+        <div class="col form-group">
+            <button class="btn btn-primary">Submit</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>
